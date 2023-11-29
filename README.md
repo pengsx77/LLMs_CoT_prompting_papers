@@ -14,3 +14,4 @@ L-BFGS（Limited-memory Broyden-Fletcher-Goldfarb-Shanno）是一种优化算法
 ##2023.11.29
 上午学正则，爬虫----》python技能树
 实验，服务器跑代码（能否连接？）
+integral 不可或缺的
