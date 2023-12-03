@@ -26,3 +26,4 @@ finetuning
 具体的资源投入
 攒数据、finetune、攒数据、finetune
 #现在可以编辑了吧
+yesssssssss
