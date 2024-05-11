@@ -21,3 +21,7 @@ ZeRO：零冗余优化器。由微软推出并应用于其DeepSpeed框架中。�
 1个Worker或者Server下可以不止1块GPU。
 Server可以只做梯度聚合，也可以梯度聚合+全量参数更新一起做
 [原文连接](https://zhuanlan.zhihu.com/p/617133971)
+
+微软开发的ZeRO（零冗余优化），它是DeepSpeed这一分布式训练框架的核心，被用来解决大模型训练中的显存开销问题。ZeRO的思想就是用通讯换显存。如果初读ZeRO，觉得它逻辑跳跃，晦涩难懂，那么这篇文章或许可以帮到你～
+大模型中的精度(https://zhuanlan.zhihu.com/p/673708074)
+大模型量化(https://zhuanlan.zhihu.com/p/627436535)
