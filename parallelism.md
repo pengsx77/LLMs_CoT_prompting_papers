@@ -6,3 +6,18 @@ DP（Data Parallelism）：最早的数据并行模式，一般采用参数服�
 DDP（Distributed Data Parallelism）：分布式数据并行，采用Ring AllReduce的通讯方式，实际中多用于多机场景
 ZeRO：零冗余优化器。由微软推出并应用于其DeepSpeed框架中。严格来讲ZeRO采用数据并行+张量并行的方式，旨在降低存储。
 ![image loading!](1.png)
+一个经典数据并行的过程如下：
+
+若干块计算GPU，如图中GPU0~GPU2；1块梯度收集GPU，如图中AllReduce操作所在GPU。
+在每块计算GPU上都拷贝一份完整的模型参数。
+把一份数据X（例如一个batch）均匀分给不同的计算GPU。
+每块计算GPU做一轮FWD和BWD后，算得一份梯度G。
+每块计算GPU将自己的梯度push给梯度收集GPU，做聚合操作。这里的聚合操作一般指梯度累加。当然也支持用户自定义。
+梯度收集GPU聚合完毕后，计算GPU从它那pull下完整的梯度结果，用于更新模型参数W。更新完毕后，计算GPU上的模型参数依然保持一致。
+聚合再下发梯度的操作，称为AllReduce。
+
+前文说过，实现DP的一种经典编程框架叫“参数服务器”，在这个框架里，计算GPU称为Worker，梯度聚合GPU称为Server。在实际应用中，为了尽量减少通讯量，一般可选择一个Worker同时作为Server。比如可把梯度全发到GPU0上做聚合。需要再额外说明几点：
+
+1个Worker或者Server下可以不止1块GPU。
+Server可以只做梯度聚合，也可以梯度聚合+全量参数更新一起做
+[原文连接](https://zhuanlan.zhihu.com/p/617133971)
